@@ -18,7 +18,7 @@
 
 - name: Clone Community repo 'HEAD'
   git:
-    repo: https://github.com/cloudbox/community.git
+    repo: https://github.com/im-mortal/community.git
     dest: /opt/community
     clone: yes
     version: HEAD
