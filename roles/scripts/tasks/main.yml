@@ -35,7 +35,7 @@
     - /opt/scripts/nginx-proxy
     - /opt/scripts/plex
     - /opt/scripts/plex_autoscan
-    - /opt/scripts/plexpy
+    - /opt/scripts/tautulli
     - /opt/scripts/torrents
     - /opt/scripts/rclone
 
