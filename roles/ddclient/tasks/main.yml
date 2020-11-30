@@ -23,7 +23,7 @@
   set_fact:
     subdomains:
       - plex
-      - plexpy
+      - tautulli
       - "{{ ombi.subdomain|default('ombi',true) }}"
       - portainer
       - organizr

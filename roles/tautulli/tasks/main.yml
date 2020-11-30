@@ -1,5 +1,5 @@
 #########################################################################
-# Title:         Cloudbox: PlexPy Role                                  #
+# Title:         Cloudbox: Tautulli Role                                  #
 # Author(s):     l3uddz, desimaniac                                     #
 # URL:           https://github.com/cloudbox/cloudbox                   #
 # Docker Image:  tautulli/tautulli                                      #
@@ -13,12 +13,12 @@
   include_role:
     name: cloudflare-dns
   vars:
-    subdomain: plexpy
+    subdomain: tautulli
   when: cloudflare_enabled
 
 - name: Stop and remove any existing container
   docker_container:
-    name: plexpy
+    name: tautulli
     state: absent
 
 - name: Wait for Plex Logs folder to be created by Plex
@@ -27,27 +27,27 @@
     state: present
   when: (not continuous_integration)
 
-- name: Create plexpy directories
+- name: Create tautulli directories
   file: "path={{ item }} state=directory mode=0775 owner={{ user.name }} group={{ user.name }}"
   with_items:
-    - /opt/plexpy
-    - /opt/scripts/plexpy
+    - /opt/tautulli
+    - /opt/scripts/tautulli
 
 - name: Create and start container
   docker_container:
-    name: plexpy
+    name: tautulli
     image: "tautulli/tautulli:latest"
     pull: yes
     env:
       PUID: "{{ uid }}"
       PGID: "{{ gid }}"
-      VIRTUAL_HOST: "plexpy.{{ user.domain }}"
+      VIRTUAL_HOST: "tautulli.{{ user.domain }}"
       VIRTUAL_PORT: 8181
-      LETSENCRYPT_HOST: "plexpy.{{ user.domain }}"
+      LETSENCRYPT_HOST: "tautulli.{{ user.domain }}"
       LETSENCRYPT_EMAIL: "{{ user.email }}"
       TZ: "{{ tz }}"
     volumes:
-      - "/opt/plexpy:/config"
+      - "/opt/tautulli:/config"
       - "/opt/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro"
       - "/opt/scripts:/scripts"
     labels:
@@ -55,7 +55,7 @@
     networks:
       - name: cloudbox
         aliases:
-          - plexpy
+          - tautulli
     purge_networks: yes
     restart_policy: unless-stopped
     state: started
